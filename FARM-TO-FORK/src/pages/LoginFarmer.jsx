@@ -1,31 +1,46 @@
 import React from "react";
-import { useEffect } from "react";
 import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 
 const LoginFarmer = () => {
-  const [username, setUsername] = useState("");
+  const history = useNavigate();
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("Farmer");
-  const handleLoginSubmit = (e) => {
+  async function submit(e) {
     e.preventDefault();
-    axios.post("http://localhost:3000/login", {
-      username: username,
-      password: password,
-      role: role,
-    });
-    // console.log(username, password, role);
-  };
+
+    try {
+        const response = await axios.post("http://localhost:5000/login", {
+            userName,
+            password,
+            role:"Farmer"
+        });
+        console.log(response);
+
+        if (response.data.status === "exist") {
+            console.log("HI");
+            localStorage.setItem('accessToken', response.data.accessToken);
+            history("/", { state: { id: userName } });
+            window.location.reload();
+        } else if (response.data.status === "notexist") {
+            alert("User has not signed up");
+        }
+    } catch (error) {
+        alert("Wrong details or server error");
+        console.error(error);
+    }
+}
   return (
     <>
       <div className="login">
         <h1>Login as Farmer</h1>
-        <form onSubmit={handleLoginSubmit}>
+        <form onSubmit={submit}>
           <input
             type="text"
             placeholder="Username"
             required
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUserName(e.target.value)}
           />
           <input
             type="password"
