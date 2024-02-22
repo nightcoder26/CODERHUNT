@@ -50,7 +50,7 @@ const LoginFarmer = () => {
           <input type="text" value="Farmer" hidden />
           <button type="submit">Login</button>
           <p className="message">
-            Not registered? <a href="/register">Create an account</a>
+            Not registered? <a href="/SignupFarmer">Create an account</a>
           </p>
         </form>
       </div>

@@ -1,7 +1,11 @@
 import React from "react";
 
 const HomeDS = () => {
-  return <div>HomeDS</div>;
+  return (
+    <>
+      <div className="ds-home"></div>
+    </>
+  );
 };
 
 export default HomeDS;
