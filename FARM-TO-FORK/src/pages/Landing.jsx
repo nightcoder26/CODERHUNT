@@ -88,6 +88,76 @@ const Landing = () => {
             <button onClick={handleDining}>Dining Service</button>
             <button onClick={handleAdmin}>Admin</button>
           </div>
+          <div className="footer">
+            <div className="footer-1">
+              <h3>Company</h3>
+              <ul>
+                <li>
+                  <a href="/about">About</a>
+                </li>
+                <li>
+                  <a href="/blog">Blog</a>
+                </li>
+                <li>
+                  <a href="/press">Press</a>
+                </li>
+                <li>
+                  <a href="/work">Work Here</a>
+                </li>
+                <li>
+                  <a href="/investor">Investor</a>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-2">
+              <h3>Support</h3>
+              <ul>
+                <li>
+                  <a href="/help">Help Center</a>
+                </li>
+                <li>
+                  <a href="/terms">Terms of Service</a>
+                </li>
+                <li>
+                  <a href="/privacy">Privacy Policy</a>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-3">
+              <h3>Community</h3>
+              <ul>
+                <li>
+                  <a href="/events">Events</a>
+                </li>
+                <li>
+                  <a href="/forum">Forum</a>
+                </li>
+                <li>
+                  <a href="/newsletter">Newsletter</a>
+                </li>
+              </ul>
+            </div>
+            <div className="footer-4">
+              <h3>Connect</h3>
+              <ul>
+                <li>
+                  <a href="https://www.facebook.com">Facebook</a>
+                </li>
+                <li>
+                  <a href="https://www.twitter.com">Twitter</a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com">Instagram</a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com">LinkedIn</a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com">Youtube</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </>

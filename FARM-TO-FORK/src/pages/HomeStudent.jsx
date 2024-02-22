@@ -5,7 +5,8 @@ import "../styles/HomeStudent.css";
 const HomeStudent = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/api/students/buy")
+    axios
+      .get("http://localhost:5000/api/students/buy")
       .then((response) => {
         setData(response.data.data);
       })
@@ -37,7 +38,14 @@ const HomeStudent = () => {
 
   const handleJoinUsSubmit = (e) => {
     e.preventDefault();
-    console.log("Join Us submitted:", studentName, regNo, contact, studentType, joinUsReason);
+    console.log(
+      "Join Us submitted:",
+      studentName,
+      regNo,
+      contact,
+      studentType,
+      joinUsReason
+    );
   };
 
   const handleLogoutConfirm = () => {
@@ -57,21 +65,25 @@ const HomeStudent = () => {
             <li onClick={() => setSelectedNav(3)}>Logout</li>
           </ul>
         </nav>
-        <h1>Student Home</h1>
-        <p>Welcome to the Student Home Page</p>
+
+        <p>
+          Welcome <strong>Student</strong>
+        </p>
         {selectedNav === 0 && (
           <div className="student-buy">
             {data.map((item) => (
               <div className="student-buy-item" key={item._id}>
-                <h2>{item.name}</h2>
-                <p>{item.item}</p>
-                <p>{item.normalPrice}</p>
+                <h2 className="student-buy-item-title">{item.item}</h2>
+                <p>{item.name}</p>
+                <p>
+                  <strong>Price :</strong> {item.normalPrice} / kg
+                </p>
                 <input
                   type="number"
                   placeholder="Quantity"
                   onChange={(e) => setInputQuantity(e.target.value)}
                 />
-                <button onClick={handleButtonClick}>Add to Cart</button>
+                <button onClick={handleButtonClick}>Buy</button>
               </div>
             ))}
           </div>
@@ -87,7 +99,11 @@ const HomeStudent = () => {
             <form onSubmit={handleJoinUsSubmit}>
               <label>
                 Student Name:
-                <input type="text" value={studentName} onChange={(e) => setStudentName(e.target.value)} />
+                <input
+                  type="text"
+                  value={studentName}
+                  onChange={(e) => setStudentName(e.target.value)}
+                />
               </label>
               {/* ... (additional input fields) */}
               <button type="submit">Join Us</button>
