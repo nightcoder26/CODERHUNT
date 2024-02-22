@@ -18,11 +18,31 @@ import HomeDS from "../src/pages/HomeDS.jsx";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [role, setRole] = useState('');
+  const getRoleFromToken = () => {
+    const token = localStorage.getItem('accessToken');
+  
+    if (!token) {
+      return ''; 
+    }
+  
+    try {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      const role = tokenPayload.role; 
+      return role || ''; 
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return ''; 
+    }
+  };
+  
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     setAuthenticated(!!token);
-    console.log("Token from localStorage:", token);
+    const role = getRoleFromToken(token);
+    setRole(role);
+    console.log(role)
   }, []);
   return (
     
@@ -42,10 +62,16 @@ function App() {
           <Route path="/SignupDS" element={<SignupDS />} />
           <Route
             path="/HomeFarmer"
-            element={authenticated ? <HomeFarmer /> : <LoginFarmer />}
+            element={
+              authenticated && role === "Farmer" ? (<HomeFarmer />) : (<LoginFarmer />)
+            }
           />
-          <Route path="/HomeStudent" element={<HomeStudent />} />
-          <Route path="/HomeDS" element={<HomeDS />} />
+          <Route path="/HomeStudent" 
+          element={authenticated && role==="Student" ? <HomeStudent /> : <LoginStudent />}
+           />
+          <Route 
+          path="/HomeDS" 
+          element={authenticated && role==="DS" ? <HomeDS /> : <LoginDS />} />
         </Routes>
       </BrowserRouter>
     </>

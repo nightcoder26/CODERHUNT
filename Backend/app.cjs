@@ -57,18 +57,17 @@ app.post("/login", async (req, res) => {
         const check = await User.findOne({ userName: userName, password: password, role:role });
 
         if (check) {
-            const accessToken = jwt.sign(userName, 'your-secret-key');
+            const accessToken = jwt.sign({ userName, role }, 'your-secret-key');
             console.log(accessToken);
             
             res.json({ status: "exist", accessToken: accessToken });
         } else {
             res.json({ status: "notexist" });
         }
-    
 });
 
 app.post("/signup", async (req, res) => {
-    const { name, userName, password, city, role } = req.body;
+    const { name, userName, password, address, role } = req.body;
 
     try {
         const existingUser = await User.findOne({ userName: userName });
@@ -77,7 +76,7 @@ app.post("/signup", async (req, res) => {
             return res.json("exist");
         }
 
-        const newUser = new User({ name, userName, password , city, role});
+        const newUser = new User({ name, userName, password , address, role});
 
         const savedUser = await newUser.save();
         res.json("success");

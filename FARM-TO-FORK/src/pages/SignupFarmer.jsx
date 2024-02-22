@@ -8,27 +8,32 @@ const SignupFarmer = () => {
   const [address, setAddress] = useState("");
   let exist = false;
   let success = false;
-  const handleSignupSubmit = (e) => {
+  async function handleSignupSubmit(e) {
     e.preventDefault();
-    // console.log(username, password, fullName, address, role);
-    axios
-      .post("http://localhost:3000/signup", {
-        username: username,
-        password: password,
-        fullName: fullName,
-        address: address,
-        role: "Farmer",
-      })
-      .then((response) => {
-        if (response == "exist") {
+
+    try {
+        const response = await axios.post("http://localhost:5000/signup", {
+          userName: username,
+          password: password,
+          name: fullName,
+          address: address,
+          role: "Farmer",
+        });
+        console.log(response.data);
+
+        if (response.data == "exist") {
           exist = true;
-        } else if (response == "success") {
-          success = true;
+        } else if (response.data == "success") {
+          console.log("success");
         } else {
           console.log("error");
         }
-      });
-  };
+    } catch (error) {
+        alert("Wrong details or server error");
+        console.error(error);
+    }
+}
+
   return (
     <>
       <div className="signup">
