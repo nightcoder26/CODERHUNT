@@ -162,6 +162,16 @@ app.get('/api/students/buy', async (req, res) => {
         res.status(500).json({ status: 'error', message: 'Failed to fetch posts.' });
     }
 })
+app.get('/api/students/view', async (req, res) => {
+    try{
+        const orders = await Transaction.find({ userName: userName, delivered:0})
+        res.json({ status: 'success', data: orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch orders.' });
+    }
+})
+
 
 app.get('/api/dining/buy', async (req, res) => {
     try {
