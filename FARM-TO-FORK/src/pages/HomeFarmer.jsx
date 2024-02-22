@@ -3,6 +3,10 @@ import "../styles/HomeFarmer.css";
 import { useState } from "react";
 const HomeFarmer = () => {
   const [selectedNav, setSelectedNav] = useState(0);
+  const [title, setTitle] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [bulk, setBulk] = useState(0);
+  const [retail, setRetail] = useState(0);
   let username = "bruh";
   async function handleFarmerPost(e) {
     e.preventDefault();
@@ -47,10 +51,26 @@ const HomeFarmer = () => {
             <h2>Add Post</h2>
             <form onSubmit={handleFarmerPost}>
               <input type="text" value={username} hidden />
-              <input type="text" placeholder="Title" />
-              <input type="number" placeholder="Quantity(Kgs)" />
-              <input type="number" placeholder="Bulk Price" />
-              <input type="number" placeholder="Retail Price" />
+              <input
+                type="text"
+                placeholder="Title"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Quantity(Kgs)"
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Bulk Price"
+                onChange={(e) => setBulk(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Retail Price"
+                onChange={(e) => setRetail(e.target.value)}
+              />
 
               <button type="submit">Add Post</button>
             </form>

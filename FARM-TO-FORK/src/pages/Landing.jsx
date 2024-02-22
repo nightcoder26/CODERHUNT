@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
+import "../styles/Landing.css";
 
 const Landing = () => {
   const [farmerClick, setFarmerClick] = useState(false);
@@ -22,47 +22,43 @@ const Landing = () => {
   };
   return (
     <>
-      <Navbar />
       {farmerClick ? <Navigate to="/LoginFarmer" /> : <Navigate to="/" />}
       {studentClick ? <Navigate to="/LoginStudent" /> : <Navigate to="/" />}
       {diningClick ? <Navigate to="/LoginDS" /> : <Navigate to="/" />}
       {adminClick ? <Navigate to="/LoginAdmin" /> : <Navigate to="/" />}
       <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <h1>Welcome to Farm to Fork</h1>
-              <p>
-                Farm to Fork is a platform that connects farmers, students, and
-                dining services. It is a platform that allows farmers to sell
-                their produce to dining services and students to buy produce
-                from dining services.
-              </p>
-            </div>
-            <div className="col-md-6">
-              <div className="row">
-                <div className="col-md-6">
-                  <button className="btn btn-primary" onClick={handleFarmer}>
-                    Farmer
-                  </button>
-                </div>
-                <div className="col-md-6">
-                  <button className="btn btn-primary" onClick={handleStudent}>
-                    Student
-                  </button>
-                </div>
-                <div className="col-md-6">
-                  <button className="btn btn-primary" onClick={handleDining}>
-                    Dining Services
-                  </button>
-                </div>
-                <div className="col-md-6">
-                  <button className="btn btn-primary" onClick={handleAdmin}>
-                    Admin
-                  </button>
-                </div>
+        <div className="landing">
+          <div className="landing-1">
+            <nav className="navbar">
+              <div className="logo">
+                <h1>Farm to Fork</h1>
               </div>
-            </div>
+              <div className="links">
+                <a href="/" className="link">
+                  Home
+                </a>
+                <a href="/about" className="link">
+                  About
+                </a>
+                <a href="/contact" className="link">
+                  Contact
+                </a>
+              </div>
+            </nav>
+            <h1>Farm to Fork</h1>
+            <p>
+              Welcome to Farm to Fork. A platform that connects farmers and
+              students. Farmers can post their produce and students can buy them
+              directly from the farmers. We also have a dining service for the
+              students. We also have an admin panel to manage the platform.
+            </p>
+          </div>
+
+          <div className="landing-buttons">
+            <button onClick={handleFarmer}>Farmer</button>
+            <button onClick={handleStudent}>Student</button>
+            <button onClick={handleDining}>Dining Service</button>
+            <button onClick={handleAdmin}>Admin</button>
           </div>
         </div>
       </div>
