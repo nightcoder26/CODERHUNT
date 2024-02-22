@@ -238,10 +238,12 @@ app.post("/api/buy", async (req, res) => {
         data: savedTransaction,
       });
     } else {
-      res.status(400).json({
-        status: "error",
-        message: "Insufficient quantity available for purchase.",
-      });
+      res
+        .status(400)
+        .json({
+          status: "error",
+          message: "Insufficient quantity available for purchase.",
+        });
     }
   } catch (error) {
     console.error(error);
