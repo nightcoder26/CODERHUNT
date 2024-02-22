@@ -16,6 +16,8 @@ const HomeStudent = () => {
     // Add student to database using axios
   };
 
+  const handleButtonClick = () => {};
+
   return (
     <>
       <div className="student-home">
@@ -38,7 +40,21 @@ const HomeStudent = () => {
               <p>Bulk Price</p>
               <p>Retail Price</p>
               <p>Quantity</p>
-              <button>Buy</button>
+              {buyClicked ? (
+                <>
+                  <input
+                    type="number"
+                    placeholder="Enter Quantity"
+                    className="input-quantity"
+                    onChange={(e) => {
+                      setInputQuantity(e.target.value);
+                    }}
+                  />
+                  <button onClick={(e) => setButtonClicked(true)}>Buy</button>
+                </>
+              ) : (
+                <button onClick={handleButtonClick}>Buy</button>
+              )}
             </div>
           </div>
         )}
