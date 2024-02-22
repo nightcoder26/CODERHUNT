@@ -65,19 +65,15 @@ const HomeStudent = () => {
             <li onClick={() => setSelectedNav(3)}>Logout</li>
           </ul>
         </nav>
-
-        <p>
-          Welcome <strong>Student</strong>
-        </p>
+        <h1>Student Home</h1>
+        <p>Welcome to the Student Home Page</p>
         {selectedNav === 0 && (
           <div className="student-buy">
             {data.map((item) => (
               <div className="student-buy-item" key={item._id}>
-                <h2 className="student-buy-item-title">{item.item}</h2>
+                <h2>{item.item}</h2>
                 <p>{item.name}</p>
-                <p>
-                  <strong>Price :</strong> {item.normalPrice} / kg
-                </p>
+                <p>{item.normalPrice}</p>
                 <input
                   type="number"
                   placeholder="Quantity"
