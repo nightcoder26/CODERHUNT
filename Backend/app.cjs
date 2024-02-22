@@ -1,9 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
+
+
 
 const app = express();
 const axios = require('axios');
-const port = 3000;
+const port = 5000;
+app.use(bodyParser.json());
+
+const cors = require('cors');
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -23,9 +31,10 @@ const userSchema = new mongoose.Schema({
     name: String,
     userName:String,
     password:String,
-    city:String,
+    address:String,
     role:String,
 });
+
 const farmPostSchema= new mongoose.Schema({
     userName:String,
     name: String,
@@ -38,17 +47,16 @@ const farmPostSchema= new mongoose.Schema({
 })
 
 
-const User = mongoose.model('User', userSchema);
-const FarmerPost= mongoose.model('FarmerPost', farmPostSchema);
+const User = mongoose.model('user', userSchema);
+const FarmerPost= mongoose.model('farmerpost', farmPostSchema);
 
 
 app.post("/login", async (req, res) => {
-    const { userName, password } = req.body;
-    try {
-        const check = await User.findOne({ userName: userName, password: password });
+    const { userName, password, role} = req.body;
+    console.log(req.body)
+        const check = await User.findOne({ userName: userName, password: password, role:role });
 
         if (check) {
-            const userName = { userName };
             const accessToken = jwt.sign(userName, 'your-secret-key');
             console.log(accessToken);
             
@@ -56,9 +64,7 @@ app.post("/login", async (req, res) => {
         } else {
             res.json({ status: "notexist" });
         }
-    } catch (e) {
-        res.json({ status: "fail" });
-    }
+    
 });
 
 app.post("/signup", async (req, res) => {
@@ -97,8 +103,6 @@ app.post('/api/farmers/post', async (req, res) => {
             quantity,
             bulkPrice,
             normalPrice,
-            ordered:0,
-            delivered:0,
         });
 
         const savedFarmerPost = await newFarmerPost.save();
@@ -109,17 +113,38 @@ app.post('/api/farmers/post', async (req, res) => {
     }
 });
 
-app.post('api/farmers/viewOrders'), async (req, res) => {
+app.post('/api/farmers/viewOrders', async (req, res) => {
+    try {
+        const orders = await FarmerPost.find({ userName: userName});
 
-}
+        res.json({ status: 'success', data: orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch orders.' });
+    }
+});
 
-app.post('api/farmers/viewDelivered'), async (req, res) => {
-    
-}
+app.post('/api/students/buy', async (req, res) => {
+    try {
+        const posts = await FarmerPost.find({ quantity: { $gt: 0 } });
 
-app.post('api/farmers/viewPosts'), async (req, res) => {
-    
-}
+        res.json({ status: 'success', data: posts });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch posts.' });
+    }
+})
+
+app.post('/api/dining/buy', async (req, res) => {
+    try {
+        const posts = await FarmerPost.find({ quantity: { $gt: 0 } });
+
+        res.json({ status: 'success', data: posts });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch posts.' });
+    }
+})
 
 
 
