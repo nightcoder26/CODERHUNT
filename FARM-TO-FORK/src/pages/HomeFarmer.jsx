@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import "../styles/HomeFarmer.css";
 import { useState } from "react";
 const HomeFarmer = () => {
@@ -13,9 +14,11 @@ const HomeFarmer = () => {
 
     try {
         const response = await axios.post("http://localhost:5000/api/farmers/post", {
-            userName,
-            password,
-            role:"Farmer"
+            accessToken:localStorage.getItem('accessToken'),
+            item:title,
+            quantity:quantity,
+            bulkPrice:bulk,
+            normalPrice:retail
         });
         console.log(response);
 

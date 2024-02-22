@@ -42,13 +42,20 @@ const farmPostSchema= new mongoose.Schema({
     quantity: Number,
     bulkPrice: Number,
     normalPrice: Number,
-    ordered:Number,
+})
+
+const transactionSchema= new mongoose.Schema({
+    farmerName:String,
+    productID:String,
+    productName:String,
+    userName:String,
+    quantity:Number,
     delivered:Number,
 })
 
-
 const User = mongoose.model('user', userSchema);
 const FarmerPost= mongoose.model('farmerpost', farmPostSchema);
+const Transaction = mongoose.model('transaction', transactionSchema);
 
 
 app.post("/login", async (req, res) => {
@@ -87,7 +94,10 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post('/api/farmers/post', async (req, res) => {
-    const { userName, item, quantity, bulkPrice, normalPrice } = req.body;
+    const { accessToken, item, quantity, bulkPrice, normalPrice } = req.body;
+
+          const tokenPayload = JSON.parse(atob(accessToken.split('.')[1]));
+          const userName = tokenPayload.userName; 
 
     try {
         const user = await User.findOne({ userName: userName });
@@ -114,14 +124,33 @@ app.post('/api/farmers/post', async (req, res) => {
 
 app.get('/api/farmers/viewOrders', async (req, res) => {
     try {
-        const orders = await FarmerPost.find({ userName: userName});
-
+        const orders = await Transaction.find({ farmerName: userName, delivered:0});
         res.json({ status: 'success', data: orders });
     } catch (error) {
         console.error(error);
         res.status(500).json({ status: 'error', message: 'Failed to fetch orders.' });
     }
 });
+
+app.get('/api/farmers/deliveredOrders', async(req, res) => {
+    try {
+        const orders = await Transaction.find({ farmerName: userName, delivered:1});
+        res.json({ status: 'success', data: orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch orders.' });
+    }
+})
+
+app.get('/api/farmers/allOrders', async (req, res) => {
+    try{
+        const orders = await FarmerPost.find({userName:userName});
+        res.json({ status: 'success', data: orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch orders.' });
+    }
+})
 
 app.get('/api/students/buy', async (req, res) => {
     try {
@@ -144,6 +173,41 @@ app.get('/api/dining/buy', async (req, res) => {
         res.status(500).json({ status: 'error', message: 'Failed to fetch posts.' });
     }
 })
+
+app.post('/api/buy', async (req, res) => {
+    const { farmerName, productID,productName ,userName, quantity } = req.body;
+
+    try {
+        const post = await FarmerPost.findOne({ _id: productID });
+
+        if (!post) {
+            return res.status(404).json({ status: 'error', message: 'Post not found.' });
+        }
+
+        if (post.quantity >= quantity) {
+            const updatedQuantity = post.quantity - quantity;
+            await FarmerPost.findByIdAndUpdate(productID, { quantity: updatedQuantity });
+
+            const newTransaction = new Transaction({
+                farmerName,
+                productID: productID,
+                productName:productName,
+                userName,
+                quantity,
+                delivered:0,
+            });
+
+            const savedTransaction = await newTransaction.save();
+
+            res.json({ status: 'success', message: 'Purchase successful.', data: savedTransaction });
+        } else {
+            res.status(400).json({ status: 'error', message: 'Insufficient quantity available for purchase.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to process the purchase.' });
+    }
+});
 
 
 
