@@ -12,6 +12,9 @@ import LoginAdmin from "../src/pages/LoginAdmin.jsx";
 import SignupFarmer from "../src/pages/SignupFarmer.jsx";
 import SignupStudent from "../src/pages/SignupStudent.jsx";
 import SignupDS from "../src/pages/SignupDS.jsx";
+import HomeFarmer from "../src/pages/HomeFarmer.jsx";
+import HomeStudent from "../src/pages/HomeStudent.jsx";
+import HomeDS from "../src/pages/HomeDS.jsx";
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
           <Route path="/SignupFarmer" element={<SignupFarmer />} />
           <Route path="/SignupStudent" element={<SignupStudent />} />
           <Route path="/SignupDS" element={<SignupDS />} />
+          <Route path="/HomeFarmer" element={<HomeFarmer />} />
+          <Route path="/HomeStudent" element={<HomeStudent />} />
+          <Route path="/HomeDS" element={<HomeDS />} />
         </Routes>
       </BrowserRouter>
     </>

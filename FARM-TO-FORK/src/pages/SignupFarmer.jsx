@@ -6,17 +6,28 @@ const SignupFarmer = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
-  const [role, setRole] = useState("Farmer");
+  let exist = false;
+  let success = false;
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // console.log(username, password, fullName, address, role);
-    axios.post("http://localhost:3000/signup", {
-      username: username,
-      password: password,
-      fullName: fullName,
-      address: address,
-      role: role,
-    });
+    axios
+      .post("http://localhost:3000/signup", {
+        username: username,
+        password: password,
+        fullName: fullName,
+        address: address,
+        role: "Farmer",
+      })
+      .then((response) => {
+        if (response == "exist") {
+          exist = true;
+        } else if (response == "success") {
+          success = true;
+        } else {
+          console.log("error");
+        }
+      });
   };
   return (
     <>
@@ -53,6 +64,14 @@ const SignupFarmer = () => {
             Already registered? <a href="/LoginFarmer">Login</a>
           </p>
         </form>
+        {exist && <div>Username already exists</div>}
+        {success ? (
+          <div>
+            Signup successful. Please <a href="/LoginFarmer">login</a>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </>
   );

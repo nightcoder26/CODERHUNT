@@ -1,0 +1,20 @@
+.student-navbar {
+  background-color: #816ad6;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* position: fixed; */
+  width: 100vw;
+  z-index: 100;
+}
+.student-nav-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-nav-items li {
+  list-style: none;
+  margin: 0 10px;
+}
