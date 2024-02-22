@@ -9,6 +9,9 @@ import LoginFarmer from "../src/pages/LoginFarmer.jsx";
 import LoginStudent from "../src/pages/LoginStudent.jsx";
 import LoginDS from "../src/pages/LoginDS.jsx";
 import LoginAdmin from "../src/pages/LoginAdmin.jsx";
+import SignupFarmer from "../src/pages/SignupFarmer.jsx";
+import SignupStudent from "../src/pages/SignupStudent.jsx";
+import SignupDS from "../src/pages/SignupDS.jsx";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
           <Route path="/LoginStudent" element={<LoginStudent />} />
           <Route path="/LoginDS" element={<LoginDS />} />
           <Route path="/LoginAdmin" element={<LoginAdmin />} />
+          <Route path="/SignupFarmer" element={<SignupFarmer />} />
+          <Route path="/SignupStudent" element={<SignupStudent />} />
+          <Route path="/SignupDS" element={<SignupDS />} />
         </Routes>
       </BrowserRouter>
     </>
