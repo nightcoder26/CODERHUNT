@@ -2,7 +2,8 @@ import { useState } from "react";
 import { ReactDOM } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 function App() {
   return (
     <>
