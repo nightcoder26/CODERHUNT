@@ -97,8 +97,6 @@ app.post('/api/farmers/post', async (req, res) => {
             quantity,
             bulkPrice,
             normalPrice,
-            ordered:0,
-            delivered:0,
         });
 
         const savedFarmerPost = await newFarmerPost.save();
@@ -109,17 +107,38 @@ app.post('/api/farmers/post', async (req, res) => {
     }
 });
 
-app.post('api/farmers/viewOrders'), async (req, res) => {
+app.post('/api/farmers/viewOrders', async (req, res) => {
+    try {
+        const orders = await FarmerPost.find({ userName: userName});
 
-}
+        res.json({ status: 'success', data: orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch orders.' });
+    }
+});
 
-app.post('api/farmers/viewDelivered'), async (req, res) => {
-    
-}
+app.post('/api/students/buy', async (req, res) => {
+    try {
+        const posts = await FarmerPost.find({ quantity: { $gt: 0 } });
 
-app.post('api/farmers/viewPosts'), async (req, res) => {
-    
-}
+        res.json({ status: 'success', data: posts });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch posts.' });
+    }
+})
+
+app.post('/api/dining/buy', async (req, res) => {
+    try {
+        const posts = await FarmerPost.find({ quantity: { $gt: 0 } });
+
+        res.json({ status: 'success', data: posts });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', message: 'Failed to fetch posts.' });
+    }
+})
 
 
 
