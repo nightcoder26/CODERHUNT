@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ReactDOM } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -17,7 +17,15 @@ import HomeStudent from "../src/pages/HomeStudent.jsx";
 import HomeDS from "../src/pages/HomeDS.jsx";
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    setAuthenticated(!!token);
+    console.log("Token from localStorage:", token);
+  }, []);
   return (
+    
     <>
       <BrowserRouter>
         <Routes>
@@ -32,7 +40,10 @@ function App() {
           <Route path="/SignupFarmer" element={<SignupFarmer />} />
           <Route path="/SignupStudent" element={<SignupStudent />} />
           <Route path="/SignupDS" element={<SignupDS />} />
-          <Route path="/HomeFarmer" element={<HomeFarmer />} />
+          <Route
+            path="/HomeFarmer"
+            element={authenticated ? <HomeFarmer /> : <LoginFarmer />}
+          />
           <Route path="/HomeStudent" element={<HomeStudent />} />
           <Route path="/HomeDS" element={<HomeDS />} />
         </Routes>
