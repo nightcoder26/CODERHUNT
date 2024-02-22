@@ -3,6 +3,18 @@ import { useState } from "react";
 import "../styles/HomeStudent.css";
 const HomeStudent = () => {
   const [selectedNav, setSelectedNav] = useState(0);
+  const [studentName, setStudentName] = useState("");
+  const [regNo, setRegNo] = useState("");
+  const [contact, setContact] = useState("");
+  const [studentType, setStudentType] = useState("");
+  const handleRadio = (e) => {
+    setStudentType(e.target.value);
+  };
+  const handleStudentSubmit = (e) => {
+    e.preventDefault();
+    console.log(studentName, regNo, contact, studentType);
+    // Add student to database using axios
+  };
 
   return (
     <>
@@ -43,19 +55,41 @@ const HomeStudent = () => {
         {selectedNav === 2 && (
           <div className="student-join-us">
             <h2>Join Us</h2>
-            <form>
-              <input type="text" placeholder="Full Name" />
+            <form onSubmit={handleStudentSubmit}>
+              <input
+                type="text"
+                placeholder="Full Name"
+                onChange={(e) => setStudentName(e.target.value)}
+              />
 
-              <input type="text" placeholder="Reg. No" />
-              <input type="number" placeholder="Contact No." />
-              <input type="radio" name="Student" value="Hosteller" />
+              <input
+                type="text"
+                placeholder="Reg. No"
+                onChange={(e) => setRegNo(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Contact No."
+                onChange={(e) => setContact(e.target.value)}
+              />
+              <input
+                type="radio"
+                name="Student"
+                value="Hosteller"
+                onChange={handleRadio}
+              />
               <label>Hosteller</label>
-              <input type="radio" name="Student" value="Day Scholar" />
+              <input
+                type="radio"
+                name="Student"
+                value="Day Scholar"
+                onChange={handleRadio}
+              />
               <label>Day Scholar</label>
               <label for="why-text">Why do you wanna join us</label>
               <input type="text" placeholder="👀👀?" id="why-text" />
 
-              <button>Join Us</button>
+              <button type="submit">Join Us</button>
             </form>
           </div>
         )}
