@@ -112,7 +112,7 @@ app.post('/api/farmers/post', async (req, res) => {
     }
 });
 
-app.post('/api/farmers/viewOrders', async (req, res) => {
+app.get('/api/farmers/viewOrders', async (req, res) => {
     try {
         const orders = await FarmerPost.find({ userName: userName});
 
@@ -123,7 +123,7 @@ app.post('/api/farmers/viewOrders', async (req, res) => {
     }
 });
 
-app.post('/api/students/buy', async (req, res) => {
+app.get('/api/students/buy', async (req, res) => {
     try {
         const posts = await FarmerPost.find({ quantity: { $gt: 0 } });
 
@@ -134,7 +134,7 @@ app.post('/api/students/buy', async (req, res) => {
     }
 })
 
-app.post('/api/dining/buy', async (req, res) => {
+app.get('/api/dining/buy', async (req, res) => {
     try {
         const posts = await FarmerPost.find({ quantity: { $gt: 0 } });
 

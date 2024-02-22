@@ -4,11 +4,29 @@ import { useState } from "react";
 const HomeFarmer = () => {
   const [selectedNav, setSelectedNav] = useState(0);
   let username = "bruh";
-  const handleFarmerPost = (e) => {
+  async function handleFarmerPost(e) {
     e.preventDefault();
-    console.log("Farmer Post Added");
-    // Add post to database using axios
-  };
+
+    try {
+        const response = await axios.post("http://localhost:5000/api/farmers/post", {
+            userName,
+            password,
+            role:"Farmer"
+        });
+        console.log(response);
+
+        if (response.data.status === "exist") {
+            localStorage.setItem('accessToken', response.data.accessToken);
+            history("/HomeFarmer", { state: { id: userName } });
+            window.location.reload();
+        } else if (response.data.status === "notexist") {
+            alert("User has not signed up");
+        }
+    } catch (error) {
+        alert("Wrong details or server error");
+        console.error(error);
+    }
+}
   return (
     <>
       <div className="farmer-home">
