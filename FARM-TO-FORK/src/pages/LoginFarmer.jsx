@@ -19,9 +19,8 @@ const LoginFarmer = () => {
         console.log(response);
 
         if (response.data.status === "exist") {
-            console.log("HI");
             localStorage.setItem('accessToken', response.data.accessToken);
-            history("/", { state: { id: userName } });
+            history("/HomeFarmer", { state: { id: userName } });
             window.location.reload();
         } else if (response.data.status === "notexist") {
             alert("User has not signed up");
