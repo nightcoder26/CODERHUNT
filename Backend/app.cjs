@@ -136,19 +136,23 @@ app.post("/api/farmers/post", async (req, res) => {
 });
 
 app.post("/api/farmers/viewOrders", async (req, res) => {
-  try {
-    const orders = await Transaction.find({
-      farmerName: userName,
-      delivered: 0,
-    });
-    res.json({ status: "success", data: orders });
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ status: "error", message: "Failed to fetch orders." });
-  }
-});
+    try {
+      const userName = req.body.userName;
+  
+      const orders = await Transaction.find({
+        farmerName: userName,
+        delivered: 0,
+      });
+      
+      res.json({ status: "success", data: orders });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ status: "error", message: "Failed to fetch orders." });
+    }
+  });
+  
 
 app.post("/api/farmers/deliveredOrders", async (req, res) => {
   try {
@@ -167,6 +171,8 @@ app.post("/api/farmers/deliveredOrders", async (req, res) => {
 
 app.post("/api/farmers/allOrders", async (req, res) => {
   try {
+    userName=req.body.userName
+    console.log(userName);
     const orders = await FarmerPost.find({ userName: userName });
     res.json({ status: "success", data: orders });
   } catch (error) {
