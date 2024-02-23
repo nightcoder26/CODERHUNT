@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/HomeStudent.css";
+import logo from "../assets/farm-to-fork-high-resolution-logo-removebg-preview.png";
 
 const HomeStudent = () => {
   const [data, setData] = useState([]);
@@ -57,7 +58,11 @@ const HomeStudent = () => {
     <>
       <div className="student-home">
         <nav className="student-navbar">
-          <h1>Farm to Fork</h1>
+          <h1>
+            <a href="/HomeStudent">
+              <img src={logo} width={80} />
+            </a>
+          </h1>
           <ul className="student-nav-items">
             <li onClick={() => setSelectedNav(0)}>Buy</li>
             <li onClick={() => setSelectedNav(1)}>View Orders</li>
@@ -65,18 +70,26 @@ const HomeStudent = () => {
             <li onClick={() => setSelectedNav(3)}>Logout</li>
           </ul>
         </nav>
-        <h1>Student Home</h1>
-        <p>Welcome to the Student Home Page</p>
+
         {selectedNav === 0 && (
           <div className="student-buy">
+            <p className="text-welcome">
+              Welcome <strong className="username">Username</strong>
+            </p>
+            <h3>Buy Now</h3>
             {data.map((item) => (
               <div className="student-buy-item" key={item._id}>
                 <h2>{item.item}</h2>
                 <p>{item.name}</p>
-                <p>{item.normalPrice}</p>
+                <p>
+                  {" "}
+                  <strong>Price :</strong>
+                  {item.normalPrice} / kg
+                </p>
                 <input
                   type="number"
                   placeholder="Quantity"
+                  className="input-quantity"
                   onChange={(e) => setInputQuantity(e.target.value)}
                 />
                 <button onClick={handleButtonClick}>Buy</button>
@@ -84,11 +97,7 @@ const HomeStudent = () => {
             ))}
           </div>
         )}
-        {selectedNav === 1 && (
-          <div className="student-view-orders">
-            {/* Implement logic to display orders */}
-          </div>
-        )}
+        {selectedNav === 1 && <div className="student-view-orders"></div>}
         {selectedNav === 2 && (
           <div className="student-join-us">
             <h2>Join Us</h2>
@@ -101,8 +110,43 @@ const HomeStudent = () => {
                   onChange={(e) => setStudentName(e.target.value)}
                 />
               </label>
-              {/* ... (additional input fields) */}
-              <button type="submit">Join Us</button>
+              <label>
+                Registration Number:
+                <input
+                  type="text"
+                  value={regNo}
+                  onChange={(e) => setRegNo(e.target.value)}
+                />
+              </label>
+              <label>
+                Contact:
+                <input
+                  type="text"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                />
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Hosteller"
+                  checked={studentType === "Hosteller"}
+                  onChange={handleRadio}
+                />
+                Hosteller
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Day scholar"
+                  checked={studentType === "PG"}
+                  onChange={handleRadio}
+                />
+                Day scholar
+              </label>
+              <button type="submit" onClick={handleStudentSubmit}>
+                Join Us
+              </button>
             </form>
           </div>
         )}
