@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import "../styles/HomeFarmer.css";
 import { useState } from "react";
@@ -8,32 +8,61 @@ const HomeFarmer = () => {
   const [quantity, setQuantity] = useState(0);
   const [bulk, setBulk] = useState(0);
   const [retail, setRetail] = useState(0);
+  const [allOrders, setAllOrders] = useState([]);
+  const [deliveredOrders, setDeliveredOrders] = useState([]);
+  const [viewOrders, setViewOrders] = useState([]);
   let username = "bruh";
   async function handleFarmerPost(e) {
     e.preventDefault();
 
     try {
-        const response = await axios.post("http://localhost:5000/api/farmers/post", {
-            accessToken:localStorage.getItem('accessToken'),
-            item:title,
-            quantity:quantity,
-            bulkPrice:bulk,
-            normalPrice:retail
-        });
-        console.log(response);
-
-        if (response.data.status === "exist") {
-            localStorage.setItem('accessToken', response.data.accessToken);
-            history("/HomeFarmer", { state: { id: userName } });
-            window.location.reload();
-        } else if (response.data.status === "notexist") {
-            alert("User has not signed up");
+      const response = await axios.post(
+        "http://localhost:5000/api/farmers/post",
+        {
+          accessToken: localStorage.getItem("accessToken"),
+          item: title,
+          quantity: quantity,
+          bulkPrice: bulk,
+          normalPrice: retail,
         }
+      );
+      console.log(response);
+
+      if (response.data.status === "exist") {
+        localStorage.setItem("accessToken", response.data.accessToken);
+        history("/HomeFarmer");
+        window.location.reload();
+      } else if (response.data.status === "notexist") {
+        alert("User has not signed up");
+      }
     } catch (error) {
-        alert("Wrong details or server error");
-        console.error(error);
+      alert("Wrong details or server error");
+      console.error(error);
     }
-}
+  }
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/api/farmers/viewOrders")
+      .then((response) => {
+        setViewOrders(response.data.data);
+        console.log(response.data.data);
+      });
+  });
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/api/farmers/deliveredOrders")
+      .then((response) => {
+        setDeliveredOrders(response.data.data);
+      });
+  });
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/api/farmers/allOrders")
+      .then((response) => {
+        setAllOrders(response.data.data);
+      });
+  });
   return (
     <>
       <div className="farmer-home">
@@ -82,12 +111,14 @@ const HomeFarmer = () => {
         {selectedNav === 1 && (
           <div className="farmer-view-posts">
             <h2>View Posts</h2>
-            <div className="farmer-post">
-              <h3>Post Title</h3>
-              <p>Bulk Price</p>
-              <p>Retail Price</p>
-              <p>Quantity</p>
-            </div>
+            {viewOrders.map((order) => (
+              <div className="farmer-post" key={order._id}>
+                <h3>{order.title}</h3>
+                <p>Bulk Price: {order.bulkPrice}</p>
+                <p>Retail Price: {order.retailPrice}</p>
+                <p>Quantity: {order.quantity}</p>
+              </div>
+            ))}
           </div>
         )}
         {selectedNav === 2 && (

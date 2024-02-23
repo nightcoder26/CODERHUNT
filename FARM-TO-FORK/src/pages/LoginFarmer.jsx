@@ -11,25 +11,25 @@ const LoginFarmer = () => {
     e.preventDefault();
 
     try {
-        const response = await axios.post("http://localhost:5000/login", {
-            userName,
-            password,
-            role:"Farmer"
-        });
-        console.log(response);
+      const response = await axios.post("http://localhost:5000/login", {
+        userName,
+        password,
+        role: "Farmer",
+      });
+      console.log(response);
 
-        if (response.data.status === "exist") {
-            localStorage.setItem('accessToken', response.data.accessToken);
-            history("/HomeFarmer", { state: { id: userName } });
-            window.location.reload();
-        } else if (response.data.status === "notexist") {
-            alert("User has not signed up");
-        }
+      if (response.data.status === "exist") {
+        localStorage.setItem("accessToken", response.data.accessToken);
+        history("/HomeFarmer", { state: { id: userName } });
+        window.location.reload();
+      } else if (response.data.status === "notexist") {
+        alert("User has not signed up");
+      }
     } catch (error) {
-        alert("Wrong details or server error");
-        console.error(error);
+      alert("Wrong details or server error");
+      console.error(error);
     }
-}
+  }
   return (
     <>
       <div className="login">
