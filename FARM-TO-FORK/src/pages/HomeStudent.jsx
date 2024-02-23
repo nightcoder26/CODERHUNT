@@ -5,6 +5,7 @@ import logo from "../assets/farm-to-fork-high-resolution-logo-removebg-preview.p
 
 const HomeStudent = () => {
   const [data, setData] = useState([]);
+  const [inputQuantity, setInputQuantity] = useState(0);
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/students/buy")
@@ -16,12 +17,16 @@ const HomeStudent = () => {
       });
   }, []);
 
+  useEffect(() => {
+    axios.post("http://localhost:5000/api/buy", {});
+  });
+  console.log(data._id, data.item, data.name, inputQuantity);
   const [selectedNav, setSelectedNav] = useState(0);
   const [studentName, setStudentName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [contact, setContact] = useState("");
   const [studentType, setStudentType] = useState("");
-  const [inputQuantity, setInputQuantity] = useState(0);
+
   const [joinUsReason, setJoinUsReason] = useState("");
 
   const handleRadio = (e) => {
