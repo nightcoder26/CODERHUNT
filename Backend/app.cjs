@@ -135,7 +135,7 @@ app.post("/api/farmers/post", async (req, res) => {
   }
 });
 
-app.get("/api/farmers/viewOrders", async (req, res) => {
+app.post("/api/farmers/viewOrders", async (req, res) => {
   try {
     const orders = await Transaction.find({
       farmerName: userName,
@@ -150,7 +150,7 @@ app.get("/api/farmers/viewOrders", async (req, res) => {
   }
 });
 
-app.get("/api/farmers/deliveredOrders", async (req, res) => {
+app.post("/api/farmers/deliveredOrders", async (req, res) => {
   try {
     const orders = await Transaction.find({
       farmerName: userName,
@@ -165,7 +165,7 @@ app.get("/api/farmers/deliveredOrders", async (req, res) => {
   }
 });
 
-app.get("/api/farmers/allOrders", async (req, res) => {
+app.post("/api/farmers/allOrders", async (req, res) => {
   try {
     const orders = await FarmerPost.find({ userName: userName });
     res.json({ status: "success", data: orders });
