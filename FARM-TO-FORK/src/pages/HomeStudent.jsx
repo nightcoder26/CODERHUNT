@@ -38,8 +38,9 @@ const HomeStudent = () => {
     console.log("Student submitted:", studentName, regNo, contact, studentType);
   };
 
-  const handleButtonClick = () => {
-    console.log("Button clicked. Quantity:", inputQuantity);
+  const handleButtonClick = (item) => {
+    console.log("Button clicked. Item:", item);
+    console.log("Quantity:", inputQuantity);
   };
 
   const handleJoinUsSubmit = (e) => {
