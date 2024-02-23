@@ -47,26 +47,35 @@ const HomeFarmer = () => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/farmers/viewOrders")
+      .post("http://localhost:5000/api/farmers/viewOrders", {
+        userName: userName, 
+      })
       .then((response) => {
         setViewOrders(response.data.data);
         console.log(response.data.data);
       });
-  });
+  }, [userName]); 
+  
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/farmers/deliveredOrders")
+      .post("http://localhost:5000/api/farmers/deliveredOrders", {
+        userName: userName, 
+      })
       .then((response) => {
+        console.log(response.data.data);
         setDeliveredOrders(response.data.data);
       });
-  });
+  }, [userName]);
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/farmers/allOrders")
+      .post("http://localhost:5000/api/farmers/allOrders", {
+        userName: userName, 
+      })
       .then((response) => {
+        console.log(response.data.data);
         setAllOrders(response.data.data);
       });
-  });
+  }, [userName]);
   return (
     <>
       <div className="farmer-home">
