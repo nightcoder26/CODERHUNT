@@ -11,6 +11,10 @@ const HomeFarmer = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [deliveredOrders, setDeliveredOrders] = useState([]);
   const [viewOrders, setViewOrders] = useState([]);
+  const token = localStorage.getItem('accessToken');
+  const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+  const userName = tokenPayload.userName; 
+   
   let username = "bruh";
   async function handleFarmerPost(e) {
     e.preventDefault();
