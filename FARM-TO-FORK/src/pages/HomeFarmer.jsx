@@ -11,6 +11,10 @@ const HomeFarmer = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [deliveredOrders, setDeliveredOrders] = useState([]);
   const [viewOrders, setViewOrders] = useState([]);
+  const token = localStorage.getItem('accessToken');
+  const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+  const userName = tokenPayload.userName; 
+   
   let username = "bruh";
   async function handleFarmerPost(e) {
     e.preventDefault();
@@ -43,26 +47,35 @@ const HomeFarmer = () => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/farmers/viewOrders")
+      .post("http://localhost:5000/api/farmers/viewOrders", {
+        userName: userName, 
+      })
       .then((response) => {
         setViewOrders(response.data.data);
         console.log(response.data.data);
       });
-  });
+  }, [userName]); 
+  
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/farmers/deliveredOrders")
+      .post("http://localhost:5000/api/farmers/deliveredOrders", {
+        userName: userName, 
+      })
       .then((response) => {
+        console.log(response.data.data);
         setDeliveredOrders(response.data.data);
       });
-  });
+  }, [userName]);
   useEffect(() => {
     axios
-      .post("http://localhost:5000/api/farmers/allOrders")
+      .post("http://localhost:5000/api/farmers/allOrders", {
+        userName: userName, 
+      })
       .then((response) => {
+        console.log(response.data.data);
         setAllOrders(response.data.data);
       });
-  });
+  }, [userName]);
   return (
     <>
       <div className="farmer-home">

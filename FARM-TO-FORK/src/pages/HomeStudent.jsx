@@ -39,33 +39,7 @@ const HomeStudent = () => {
   };
 
   const handleButtonClick = () => {
-    const selectedItem = data[0]; // Change this logic if you want to select a different item
-
-    if (!selectedItem) {
-      console.error("No item selected for purchase");
-      return;
-    }
-
-    if (inputQuantity <= 0) {
-      console.error("Invalid quantity");
-      return;
-    }
-
-    const purchaseData = {
-      itemId: selectedItem._id,
-      quantity: inputQuantity,
-    };
-
-    axios
-      .post("http://localhost:5000/api/students/buy", purchaseData)
-      .then((response) => {
-        console.log("Purchase successful:", response.data);
-        // Optionally, you can update state or perform any other actions after successful purchase
-      })
-      .catch((error) => {
-        console.error("Error purchasing item:", error);
-        // Optionally, handle errors or show error messages to the user
-      });
+    console.log("Button clicked. Quantity:", inputQuantity);
   };
 
   const handleJoinUsSubmit = (e) => {
